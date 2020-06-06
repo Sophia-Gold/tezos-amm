@@ -1,0 +1,63 @@
+<<: !include "./hpack/module.yaml"
+
+<<: *meta
+name:                tezos-amm
+version:             0.1.0
+github:              "sophia-gold/tezos-amm"
+license:             BSD3
+author:              "Sophia Gold"
+maintainer:          "sophiagoldnyc@gmail.com"
+copyright:           "2020 Sophia Gold"
+
+description: "Automatic market maker for Tezos"
+
+library:
+  <<: *lorentz-lib-common
+
+  dependencies:
+    - data-default
+    - fmt
+    - morley
+    - lorentz
+    - morley-prelude
+    - morley-ledgers
+    - named
+    - singletons
+    - text
+    - vinyl
+    - cryptonite
+    - bytestring
+    - aeson
+    - constraints
+    - binary
+    - optparse-applicative
+    - transformers
+    - first-class-families < 0.8.0.0
+    - megaparsec
+    - dsp
+  ghc-options:
+    - -Wno-missing-export-lists
+    - -Wno-unused-do-bind
+
+executables:
+  tezos-amm:
+    main:                Main.hs
+    source-dirs:         app
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    - -Wno-missing-export-lists
+    - -Wno-unused-do-bind
+    dependencies:
+    - tezos-amm
+    - optparse-applicative
+    - morley
+    - lorentz
+    - named
+    - text
+    - morley-prelude
+    - singletons
+    - ansi-wl-pprint
+    - containers
+    - dsp

@@ -1,0 +1,67 @@
+parameter nat;
+storage int;
+code { DUP;
+       CAR;
+       DIP { CDR };
+       DIP { DROP };
+       DUP;
+       INT;
+       NEQ;
+       IF {  }
+          { PUSH string "Log zero undefined";
+            FAILWITH };
+       DIP { PUSH nat 32768;
+             PUSH int 0 };
+       PUSH bool True;
+       LOOP { DUP;
+              DIP { PUSH nat 65536 };
+              COMPARE;
+              GE;
+              IF { PUSH bool False }
+                 { DIP { PUSH nat 1 };
+                   LSL;
+                   DIP { DIP { PUSH nat 65536 };
+                         SUB };
+                   PUSH bool True } };
+       PUSH bool True;
+       LOOP { DUP;
+              DIP { PUSH nat 131072 };
+              COMPARE;
+              LT;
+              IF { PUSH bool False }
+                 { DIP { PUSH nat 1 };
+                   LSR;
+                   DIP { DIP { PUSH nat 65536 };
+                         ADD };
+                   PUSH bool True } };
+       PUSH nat 0;
+       PUSH bool True;
+       LOOP { DUP;
+              DIP { PUSH nat 16 };
+              COMPARE;
+              GE;
+              IF { PUSH bool False }
+                 { PUSH nat 1;
+                   ADD;
+                   DIP { DUP;
+                         MUL;
+                         DIP { PUSH nat 16 };
+                         LSR;
+                         DUP;
+                         DIP { PUSH nat 131072 };
+                         COMPARE;
+                         GT;
+                         IF { DIP { PUSH nat 1 };
+                              LSR;
+                              DIP { DIP { DUP };
+                                    ADD } }
+                            { DUP;
+                              DROP };
+                         DIP { DIP { DIP { PUSH nat 1 };
+                                     LSR } } };
+                   PUSH bool True } };
+       DROP;
+       DROP;
+       DIP { DROP };
+       NIL operation;
+       PAIR };
